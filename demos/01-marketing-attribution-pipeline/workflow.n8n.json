@@ -1,0 +1,93 @@
+{
+  "name": "Marketing Attribution Pipeline (demo)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [{ "field": "hours", "hoursInterval": 1 }] }
+      },
+      "id": "node-schedule",
+      "name": "Every hour",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "attribution-postback",
+        "responseMode": "onReceived"
+      },
+      "id": "node-webhook",
+      "name": "Attribution postback",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 420]
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v19.0/act_ACCOUNT/insights",
+        "options": {}
+      },
+      "id": "node-meta",
+      "name": "Pull Meta spend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 120]
+    },
+    {
+      "parameters": {
+        "url": "https://googleads.googleapis.com/v16/customers/CUSTOMER/googleAds:search",
+        "options": {}
+      },
+      "id": "node-google",
+      "name": "Pull Google Ads spend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 280]
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "# Normalize each platform's schema, de-dupe postbacks by event_id,\n# join spend to conversions by channel, emit ROAS rows.\n# (Mirror of transform.py — kept inline so the workflow is self-contained.)\nreturn items"
+      },
+      "id": "node-code",
+      "name": "Normalize + ROAS (Python)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [760, 220]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "marketing_attribution",
+        "columns": "channel,campaign,date,spend,revenue,conversions,roas"
+      },
+      "id": "node-warehouse",
+      "name": "Upsert to warehouse",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1020, 140]
+    },
+    {
+      "parameters": {
+        "channel": "#growth-daily",
+        "text": "=Yesterday's ROAS — meta {{ $json.meta_roas }}x, google {{ $json.google_roas }}x"
+      },
+      "id": "node-slack",
+      "name": "Slack daily digest",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1020, 320]
+    }
+  ],
+  "connections": {
+    "Every hour": { "main": [[{ "node": "Pull Meta spend", "type": "main", "index": 0 }, { "node": "Pull Google Ads spend", "type": "main", "index": 0 }]] },
+    "Pull Meta spend": { "main": [[{ "node": "Normalize + ROAS (Python)", "type": "main", "index": 0 }]] },
+    "Pull Google Ads spend": { "main": [[{ "node": "Normalize + ROAS (Python)", "type": "main", "index": 0 }]] },
+    "Attribution postback": { "main": [[{ "node": "Normalize + ROAS (Python)", "type": "main", "index": 0 }]] },
+    "Normalize + ROAS (Python)": { "main": [[{ "node": "Upsert to warehouse", "type": "main", "index": 0 }, { "node": "Slack daily digest", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": { "note": "Self-built demonstration. Credentials/IDs are placeholders; data is synthetic." }
+}

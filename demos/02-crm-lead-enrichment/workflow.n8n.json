@@ -1,0 +1,93 @@
+{
+  "name": "AI Lead Enrichment + Risk Scoring (demo)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-lead",
+        "responseMode": "onReceived"
+      },
+      "id": "node-webhook",
+      "name": "New lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.enrichment-provider.example/v1/lookup",
+        "sendQuery": true,
+        "queryParameters": { "parameters": [{ "name": "domain", "value": "={{ $json.email.split('@')[1] }}" }] },
+        "options": {}
+      },
+      "id": "node-firmo",
+      "name": "Enrich firmographics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.anthropic.com/v1/messages",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [{ "name": "anthropic-version", "value": "2023-06-01" }] },
+        "sendBody": true,
+        "jsonBody": "={\n  \"model\": \"claude-fable-5\",\n  \"max_tokens\": 120,\n  \"messages\": [{\"role\":\"user\",\"content\":\"Score this lead A/B/C against the ICP rubric and give a <=10 word summary as JSON. Lead: {{ JSON.stringify($json) }}\"}]\n}",
+        "options": {}
+      },
+      "id": "node-llm",
+      "name": "LLM: summary + fit tier",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [720, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true },
+          "conditions": [{ "leftValue": "={{ $json.tier }}", "rightValue": "A", "operator": { "type": "string", "operation": "equals" } }]
+        }
+      },
+      "id": "node-if",
+      "name": "High fit?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [960, 300]
+    },
+    {
+      "parameters": { "resource": "contact", "operation": "upsert" },
+      "id": "node-hubspot-a",
+      "name": "CRM: tag + assign AE",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [1200, 200]
+    },
+    {
+      "parameters": { "channel": "#sales", "text": "=New high-fit lead: {{ $json.company }} ({{ $json.summary }})" },
+      "id": "node-slack",
+      "name": "Slack: notify AE",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1440, 200]
+    },
+    {
+      "parameters": { "resource": "contact", "operation": "upsert" },
+      "id": "node-hubspot-b",
+      "name": "CRM: nurture queue",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [1200, 400]
+    }
+  ],
+  "connections": {
+    "New lead": { "main": [[{ "node": "Enrich firmographics", "type": "main", "index": 0 }]] },
+    "Enrich firmographics": { "main": [[{ "node": "LLM: summary + fit tier", "type": "main", "index": 0 }]] },
+    "LLM: summary + fit tier": { "main": [[{ "node": "High fit?", "type": "main", "index": 0 }]] },
+    "High fit?": { "main": [[{ "node": "CRM: tag + assign AE", "type": "main", "index": 0 }], [{ "node": "CRM: nurture queue", "type": "main", "index": 0 }]] },
+    "CRM: tag + assign AE": { "main": [[{ "node": "Slack: notify AE", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": { "note": "Self-built demonstration. Credentials/IDs are placeholders; data is synthetic." }
+}
