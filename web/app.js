@@ -59,8 +59,8 @@
 
   function setParallaxForLevel(level) {
     if (reduce) { factor = 0; heroFactor = 0; }
-    else if (level === 'moderate') { factor = 0.22; heroFactor = 0; }
-    else if (level === 'expressive') { factor = 0.4; heroFactor = -0.06; }
+    else if (level === 'moderate') { factor = 0.32; heroFactor = 0; }
+    else if (level === 'expressive') { factor = 0.55; heroFactor = -0.09; }
     else { factor = 0; heroFactor = 0; } // subtle
     applyParallax();
   }
