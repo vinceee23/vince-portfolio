@@ -203,6 +203,23 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 max(24px, 5vw); }
 .card__title { font-size: 1.18rem; font-weight: 600; margin-bottom: 12px; }
 .card__body { color: var(--muted); font-size: 0.96rem; margin-bottom: 18px; }
 .card__tags { color: var(--accent-dim); font-size: 0.8rem; letter-spacing: 0.02em; }
+.card__link {
+  display: inline-block;
+  margin-top: 16px;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.84rem;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease);
+}
+.card__link:hover { transform: translateX(3px); }
+
+.section__intro {
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 0.98rem;
+  margin: -16px 0 36px;
+}
 
 /* ===== Stack ===== */
 .stack { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; }
