@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vince Macaraig — AI & Automation Engineer</title>
+  <meta name="description" content="I build AI-powered automations and data pipelines for marketing and growth teams — attribution, reporting, and the n8n/Python workflows that kill the manual grind." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Vince Macaraig — AI & Automation Engineer" />
+  <meta property="og:description" content="AI-powered automation and data pipelines for marketing & growth teams. n8n · Python · SQL." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <a href="#top" class="nav__brand">VM</a>
+    <nav class="nav__links">
+      <a href="#work">What I build</a>
+      <a href="#stack">Stack</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <p class="eyebrow reveal">AI &amp; Automation Engineer</p>
+      <h1 class="hero__title reveal">
+        I turn messy marketing data into<br />
+        <span class="accent">automated pipelines</span> that tell the truth.
+      </h1>
+      <p class="hero__sub reveal">
+        I build AI-powered automations and data pipelines for marketing &amp; growth teams —
+        attribution and ROAS/CAC reporting, data enrichment, and the
+        <span class="mono">n8n</span> / <span class="mono">Python</span> workflows that kill the
+        manual reporting grind.
+      </p>
+      <div class="hero__cta reveal">
+        <a class="btn btn--primary" href="#contact">Get in touch</a>
+        <a class="btn btn--ghost" href="#work">See what I build</a>
+      </div>
+      <p class="hero__anchor reveal">
+        Spent the last few years building marketing-data systems — including at
+        <strong>one of the world's largest fintech apps</strong>.
+      </p>
+    </section>
+
+    <!-- ============ WHAT I BUILD ============ -->
+    <section id="work" class="section">
+      <h2 class="section__label reveal"><span class="mono">01</span> What I build</h2>
+      <div class="cards">
+        <article class="card reveal">
+          <h3 class="card__title">Marketing data pipelines</h3>
+          <p class="card__body">
+            Attribution, ROAS / CAC-LTV, and automated reporting. I connect your ad platforms,
+            analytics, and CRM into one clean, scheduled pipeline — so the numbers are right and
+            nobody touches a spreadsheet by hand.
+          </p>
+          <p class="card__tags mono">Attribution · ROAS · DOMO · Metabase</p>
+        </article>
+        <article class="card reveal">
+          <h3 class="card__title">AI &amp; workflow automation</h3>
+          <p class="card__body">
+            n8n + Python + LLM steps for the work that eats your week: lead and data enrichment,
+            content repurposing, internal tooling, and lightweight agents that actually run on a
+            schedule and don't break quietly.
+          </p>
+          <p class="card__tags mono">n8n · Python · LLM · REST APIs</p>
+        </article>
+        <article class="card reveal">
+          <h3 class="card__title">Dashboards stakeholders trust</h3>
+          <p class="card__body">
+            Scattered data turned into dashboards a growth lead can actually read — with the
+            definitions, freshness, and alerting that make people believe the chart instead of
+            re-pulling it themselves.
+          </p>
+          <p class="card__tags mono">SQL · DOMO · Metabase · Sheets</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ STACK ============ -->
+    <section id="stack" class="section">
+      <h2 class="section__label reveal"><span class="mono">02</span> Stack</h2>
+      <ul class="stack reveal">
+        <li>n8n</li>
+        <li>Python</li>
+        <li>SQL</li>
+        <li>DOMO</li>
+        <li>Metabase</li>
+        <li>AppsFlyer</li>
+        <li>REST APIs</li>
+        <li>Git</li>
+        <li>LLM / AI workflows</li>
+      </ul>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="section section--contact">
+      <h2 class="section__label reveal"><span class="mono">03</span> Get in touch</h2>
+      <p class="contact__lead reveal">
+        Available for freelance projects — marketing-data pipelines and AI automation.
+        The fastest way to reach me:
+      </p>
+      <div class="contact__links reveal">
+        <!-- TODO Vince: replace LINKEDIN-URL-TBD with your real LinkedIn URL -->
+        <a class="btn btn--primary" href="https://www.linkedin.com/in/LINKEDIN-URL-TBD" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn--ghost" href="https://github.com/vinceee23" target="_blank" rel="noopener">GitHub</a>
+        <!-- TODO Vince: add a dedicated email button here (NOT your Walker address) once set up -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="mono">© 2026 Vince Macaraig</p>
+  </footer>
+
+  <script>
+    // Subtle reveal-on-scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>
