@@ -1,0 +1,7 @@
+# Local preview screenshots (not part of the site)
+shots/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log

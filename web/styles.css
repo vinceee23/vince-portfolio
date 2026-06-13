@@ -15,7 +15,11 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   background: var(--bg);
@@ -25,6 +29,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
@@ -220,7 +225,7 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 max(24px, 5vw); }
 /* ===== Footer ===== */
 .footer {
   border-top: 1px solid var(--line);
-  padding: 30px max(24px, 5vw) 110px;
+  padding: 30px max(24px, 5vw) calc(110px + env(safe-area-inset-bottom));
   text-align: center;
 }
 .footer .mono { color: var(--muted); font-size: 0.82rem; letter-spacing: 0.05em; }
@@ -266,7 +271,7 @@ body.motion-expressive .card:hover { transform: translateY(-6px) scale(1.015); }
 /* ===== Motion switcher (floating pill, bottom-center) ===== */
 .motion-switch {
   position: fixed;
-  bottom: 18px;
+  bottom: max(18px, env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
@@ -318,8 +323,14 @@ body.motion-expressive .card:hover { transform: translateY(-6px) scale(1.015); }
 }
 
 @media (max-width: 600px) {
-  .nav__links { gap: 18px; }
-  .nav__links a { font-size: 0.82rem; }
+  .nav { padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+  .nav__links { gap: 16px; }
+  .nav__links a { font-size: 0.82rem; padding: 6px 0; } /* taller tap target */
   .hero { padding: 80px 0 70px; }
   .section { padding: 72px 0; }
+
+  /* Full-width, stacked CTAs are easier to thumb-tap */
+  .hero__cta { gap: 12px; }
+  .hero__cta .btn { flex: 1 1 100%; text-align: center; padding: 14px 22px; }
+  .contact__links .btn { flex: 1 1 calc(50% - 7px); text-align: center; padding: 14px 18px; }
 }
