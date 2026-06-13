@@ -30,25 +30,32 @@
   <main id="top">
     <!-- ============ HERO ============ -->
     <section class="hero">
-      <p class="eyebrow reveal">AI &amp; Automation Engineer</p>
-      <h1 class="hero__title reveal">
-        I turn messy marketing data into<br />
-        <span class="accent">automated pipelines</span> that tell the truth.
-      </h1>
-      <p class="hero__sub reveal">
-        I build AI-powered automations and data pipelines for marketing &amp; growth teams —
-        attribution and ROAS/CAC reporting, data enrichment, and the
-        <span class="mono">n8n</span> / <span class="mono">Python</span> workflows that kill the
-        manual reporting grind.
-      </p>
-      <div class="hero__cta reveal">
-        <a class="btn btn--primary" href="#contact">Get in touch</a>
-        <a class="btn btn--ghost" href="#work">See what I build</a>
+      <div class="aurora" data-aurora>
+        <span class="aurora__blob aurora__blob--1"></span>
+        <span class="aurora__blob aurora__blob--2"></span>
+        <span class="aurora__blob aurora__blob--3"></span>
       </div>
-      <p class="hero__anchor reveal">
-        Spent the last few years building marketing-data systems — including at
-        <strong>one of the world's largest fintech apps</strong>.
-      </p>
+      <div class="hero__inner" data-hero-inner>
+        <p class="eyebrow reveal">AI &amp; Automation Engineer</p>
+        <h1 class="hero__title reveal">
+          I turn messy marketing data into<br />
+          <span class="accent">automated pipelines</span> that tell the truth.
+        </h1>
+        <p class="hero__sub reveal">
+          I build AI-powered automations and data pipelines for marketing &amp; growth teams —
+          attribution and ROAS/CAC reporting, data enrichment, and the
+          <span class="mono">n8n</span> / <span class="mono">Python</span> workflows that kill the
+          manual reporting grind.
+        </p>
+        <div class="hero__cta reveal">
+          <a class="btn btn--primary" href="#contact">Get in touch</a>
+          <a class="btn btn--ghost" href="#work">See what I build</a>
+        </div>
+        <p class="hero__anchor reveal">
+          Spent the last few years building marketing-data systems — including at
+          <strong>one of the world's largest fintech apps</strong>.
+        </p>
+      </div>
     </section>
 
     <!-- ============ WHAT I BUILD ============ -->
@@ -120,17 +127,14 @@
     <p class="mono">© 2026 Vince Macaraig</p>
   </footer>
 
-  <script>
-    // Subtle reveal-on-scroll
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-visible');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-  </script>
+  <!-- ============ MOTION PREVIEW SWITCHER (temporary — remove once a level is chosen) ============ -->
+  <div class="motion-switch" role="group" aria-label="Preview motion level">
+    <span class="motion-switch__label">Motion</span>
+    <button type="button" data-motion="subtle">Subtle</button>
+    <button type="button" data-motion="moderate">Moderate</button>
+    <button type="button" data-motion="expressive">Expressive</button>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
