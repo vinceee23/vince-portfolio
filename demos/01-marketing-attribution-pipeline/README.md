@@ -25,13 +25,12 @@ reconciling spend against conversions. The result:
 
 ```mermaid
 flowchart LR
-  A[Schedule trigger\n(hourly)] --> B[HTTP: pull ad spend\n(Meta / Google APIs)]
-  A --> C[Webhook: attribution\npostbacks (installs/events)]
-  B --> D[Python Code node\nnormalize + dedupe + join]
-  C --> D
-  D --> E[(Warehouse\ne.g. BigQuery/Postgres)]
-  E --> F[Metabase\nROAS by channel]
-  D --> G[Slack digest\nyesterday's ROAS]
+  A["Schedule · hourly"] --> B["Pull ad spend<br/>Meta / Google APIs"]
+  B --> D["Python<br/>normalize + dedupe + join"]
+  C["Webhook<br/>attribution postbacks"] --> D
+  D --> E[("Warehouse<br/>BigQuery / Postgres")]
+  E --> F["Metabase<br/>ROAS by channel"]
+  D --> G["Slack digest<br/>yesterday's ROAS"]
 ```
 
 **Decisions & rationale**

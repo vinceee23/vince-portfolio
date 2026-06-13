@@ -69,6 +69,43 @@
           <strong>one of the world's largest fintech apps</strong>.
         </p>
       </div>
+
+      <!-- Animated data pipeline: sources -> n8n -> dashboard -->
+      <div class="pipeline reveal" aria-hidden="true">
+        <svg viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="plLine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#6ee7b7" stop-opacity="0.12" />
+              <stop offset="1" stop-color="#6ee7b7" stop-opacity="0.55" />
+            </linearGradient>
+            <filter id="plGlow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="3.5" result="b" />
+              <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+          </defs>
+
+          <!-- connectors -->
+          <path id="p1" class="pl-line" d="M150,50 C285,50 285,120 400,120" />
+          <path id="p2" class="pl-line" d="M150,120 L400,120" />
+          <path id="p3" class="pl-line" d="M150,190 C285,190 285,120 400,120" />
+          <path id="p4" class="pl-line" d="M530,120 L700,120" />
+
+          <!-- source nodes -->
+          <g class="pl-node pl-src"><rect x="30" y="30" width="120" height="40" rx="10" /><text x="90" y="50">Meta Ads</text></g>
+          <g class="pl-node pl-src"><rect x="30" y="100" width="120" height="40" rx="10" /><text x="90" y="120">GA4</text></g>
+          <g class="pl-node pl-src"><rect x="30" y="170" width="120" height="40" rx="10" /><text x="90" y="190">AppsFlyer</text></g>
+
+          <!-- hub -->
+          <g class="pl-node pl-hub">
+            <rect x="400" y="92" width="130" height="56" rx="14" />
+            <text class="pl-hub-title" x="465" y="114">n8n</text>
+            <text class="pl-hub-sub" x="465" y="132">automate</text>
+          </g>
+
+          <!-- output -->
+          <g class="pl-node pl-out"><rect x="700" y="96" width="160" height="48" rx="12" /><text x="780" y="120">Dashboard</text></g>
+        </svg>
+      </div>
     </section>
 
     <!-- ============ WHAT I BUILD ============ -->
@@ -178,6 +215,9 @@
     <p class="mono">© 2026 Vince Macaraig</p>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

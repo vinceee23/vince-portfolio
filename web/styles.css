@@ -33,7 +33,16 @@ body {
 }
 
 .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
-.accent { color: var(--accent); }
+.accent {
+  background: linear-gradient(90deg, #6ee7b7 0%, #22d3ee 50%, #6ee7b7 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmer 7s linear infinite;
+}
+@keyframes shimmer { to { background-position: 220% 0; } }
 
 /* ===== Nav ===== */
 .nav {
@@ -158,6 +167,37 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 max(24px, 5vw); }
 }
 .hero__anchor strong { color: var(--text); font-weight: 600; }
 
+/* ===== Pipeline visual ===== */
+.pipeline {
+  width: 100%;
+  max-width: 720px;
+  margin: 60px 0 0;
+}
+.pipeline svg { width: 100%; height: auto; overflow: visible; }
+.pl-line { fill: none; stroke: url(#plLine); stroke-width: 2; stroke-dasharray: 5 9; stroke-linecap: round; }
+.pl-node rect {
+  fill: rgba(20, 22, 26, 0.92);
+  stroke: rgba(110, 231, 183, 0.32);
+  stroke-width: 1.5;
+}
+.pl-node text {
+  fill: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.pl-hub rect { stroke: rgba(110, 231, 183, 0.75); fill: rgba(16, 32, 27, 0.95); }
+.pl-hub-title { fill: var(--accent) !important; font-size: 22px; font-weight: 700; }
+.pl-hub-sub { fill: var(--muted) !important; font-size: 11px !important; letter-spacing: 1px; }
+.pl-packet { fill: #aef5d6; filter: url(#plGlow); }
+
+@media (max-width: 600px) {
+  .pipeline { margin-top: 44px; }
+  .pl-node text { font-size: 17px; }
+  .pl-hub-title { font-size: 26px; }
+}
+
 /* ===== Buttons ===== */
 .btn {
   display: inline-block;
@@ -254,6 +294,8 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 max(24px, 5vw); }
   transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
 }
 .reveal.is-visible { opacity: 1; transform: none; }
+/* When GSAP drives motion, it owns opacity/transform — kill the CSS transition. */
+.js-anim .reveal { transition: none; }
 
 /* =================================================================
    MOTION LEVELS  (applied via body class by app.js)
@@ -339,6 +381,7 @@ body.motion-expressive .card:hover { transform: translateY(-6px) scale(1.015); }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   .aurora__blob { animation: none !important; }
+  .accent { animation: none !important; }
   html { scroll-behavior: auto; }
 }
 

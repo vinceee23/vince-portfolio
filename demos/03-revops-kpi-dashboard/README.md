@@ -23,12 +23,30 @@ and revenue, joined consistently.
 ```mermaid
 erDiagram
   ad_spend ||--o{ fct_daily_channel : feeds
-  signups  ||--o{ fct_daily_channel : feeds
-  revenue  ||--o{ fct_daily_channel : feeds
-  ad_spend  { date day  text channel  numeric spend }
-  signups   { date day  text channel  int new_customers }
-  revenue   { date day  text channel  numeric revenue }
-  fct_daily_channel { date day  text channel  numeric spend  int new_customers  numeric revenue }
+  signups ||--o{ fct_daily_channel : feeds
+  revenue ||--o{ fct_daily_channel : feeds
+  ad_spend {
+    date day
+    text channel
+    numeric spend
+  }
+  signups {
+    date day
+    text channel
+    int new_customers
+  }
+  revenue {
+    date day
+    text channel
+    numeric revenue
+  }
+  fct_daily_channel {
+    date day
+    text channel
+    numeric spend
+    int new_customers
+    numeric revenue
+  }
 ```
 
 The grain is one row per `(day, channel)`. Every KPI (CAC, ROAS, blended LTV) is

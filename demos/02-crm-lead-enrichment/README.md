@@ -21,11 +21,11 @@ delay as the worst ones.
 
 ```mermaid
 flowchart LR
-  A[Webhook: new lead\n(form / CRM)] --> B[Enrich firmographics\n(domain → size, industry)]
-  B --> C[LLM node\nsummary + fit + risk tier]
-  C --> D{Risk/fit tier}
-  D -->|High fit| E[CRM: tag + assign\nto AE, notify Slack]
-  D -->|Low fit| F[CRM: nurture queue]
+  A["Webhook · new lead"] --> B["Enrich firmographics<br/>domain → size, industry"]
+  B --> C["LLM<br/>summary + fit + risk tier"]
+  C --> D{"Risk / fit tier"}
+  D -->|High fit| E["CRM · tag + assign AE<br/>notify Slack"]
+  D -->|Low fit| F["CRM · nurture queue"]
 ```
 
 **Decisions & rationale**
