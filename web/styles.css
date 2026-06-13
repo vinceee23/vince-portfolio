@@ -239,8 +239,11 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 max(24px, 5vw); }
 .reveal.is-visible { opacity: 1; transform: none; }
 
 /* =================================================================
-   MOTION LEVELS  (toggled via body class by app.js)
-   All three share the aurora hero + mint accent.
+   MOTION LEVELS  (applied via body class by app.js)
+   LIVE: index.html is locked to .motion-expressive.
+   ARCHIVED (kept for easy rollback): .motion-subtle, .motion-moderate.
+   Roll back by changing the body class in index.html, or compare all
+   three live at /preview-motion.html. All share the aurora + mint accent.
    ================================================================= */
 
 /* --- SUBTLE: dim, calm aurora, gentle reveals, no parallax --- */

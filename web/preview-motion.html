@@ -4,25 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0b0c0e" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Vince Macaraig — AI & Automation Engineer</title>
-  <meta name="description" content="I build AI-powered automations and data pipelines for marketing and growth teams — attribution, reporting, and the n8n/Python workflows that kill the manual grind." />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Vince Macaraig — AI & Automation Engineer" />
-  <meta property="og:description" content="AI-powered automation and data pipelines for marketing & growth teams. n8n · Python · SQL." />
+  <meta name="robots" content="noindex" />
+  <title>Motion preview (archive) — Vince Macaraig</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<!-- Motion level is locked to EXPRESSIVE. To roll back, change the body class
-     below to "motion-subtle" or "motion-moderate" (both kept in styles.css).
-     Or open /preview-motion.html to compare all three live. -->
-<body class="motion-expressive">
+<!-- ARCHIVE PAGE: the live 3-way motion comparison. The main site (index.html)
+     is locked to EXPRESSIVE. Use this page to re-compare subtle / moderate /
+     expressive anytime. Not linked from the site; not indexed. -->
+<body>
   <!-- ============ NAV ============ -->
   <header class="nav">
     <a href="#top" class="nav__brand">VM</a>
@@ -132,6 +125,14 @@
   <footer class="footer">
     <p class="mono">© 2026 Vince Macaraig</p>
   </footer>
+
+  <!-- ============ MOTION PREVIEW SWITCHER (archive tool) ============ -->
+  <div class="motion-switch" role="group" aria-label="Preview motion level">
+    <span class="motion-switch__label">Motion</span>
+    <button type="button" data-motion="subtle">Subtle</button>
+    <button type="button" data-motion="moderate">Moderate</button>
+    <button type="button" data-motion="expressive">Expressive</button>
+  </div>
 
   <script src="app.js"></script>
 </body>

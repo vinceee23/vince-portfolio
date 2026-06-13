@@ -82,7 +82,11 @@
   window.addEventListener('scroll', onScroll, { passive: true });
 
   // ---- Init ----
-  let saved = DEFAULT;
-  try { saved = localStorage.getItem('motionLevel') || DEFAULT; } catch (_) {}
-  setLevel(saved, false);
+  // Honor a hard-set body class first (index.html locks motion-expressive);
+  // otherwise use a saved choice or the default (e.g. the preview page).
+  let start = LEVELS.find(function (l) { return body.classList.contains('motion-' + l); });
+  if (!start) {
+    try { start = localStorage.getItem('motionLevel'); } catch (_) {}
+  }
+  setLevel(start || DEFAULT, false);
 })();
