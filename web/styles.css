@@ -387,7 +387,7 @@ body.motion-expressive .card:hover { transform: translateY(-6px) scale(1.015); }
 
 @media (max-width: 600px) {
   .nav { padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
-  .nav__links { gap: 16px; }
+  .nav__links { gap: 6px 16px; flex-wrap: wrap; justify-content: flex-end; }
   .nav__links a { font-size: 0.82rem; padding: 6px 0; } /* taller tap target */
   .hero { padding: 80px 0 70px; }
   .section { padding: 72px 0; }
