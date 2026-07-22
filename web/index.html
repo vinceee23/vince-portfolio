@@ -34,8 +34,9 @@
     <a href="#top" class="nav__brand">VM</a>
     <nav class="nav__links">
       <a href="#work">What I build</a>
-      <a href="#projects">Work</a>
-      <a href="#stack">Stack</a>
+      <a href="#cases">Case studies</a>
+      <a href="#projects">Demos</a>
+      <a href="#offer">Offer</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -142,9 +143,68 @@
       </div>
     </section>
 
-    <!-- ============ SELECTED WORK ============ -->
+    <!-- ============ CASE STUDIES (production work, anonymized) ============ -->
+    <section id="cases" class="section">
+      <h2 class="section__label reveal"><span class="mono">02</span> Case studies</h2>
+      <p class="section__intro reveal">
+        Production systems I designed and run — anonymized rebuilds shown (real workflow
+        logic, no client data). Every one is still running unattended today.
+      </p>
+
+      <article class="cs reveal">
+        <figure class="cs__media">
+          <img src="assets/mockup-weekly-report-email.png" alt="Automated weekly marketing performance email with KPI tiles and statistical alerts" loading="lazy" />
+        </figure>
+        <div class="cs__body">
+          <p class="cs__metric mono">4–6 hrs/week → zero</p>
+          <h3 class="cs__title">Weekly marketing report, fully automated</h3>
+          <p class="cs__text">
+            ~150 campaign tactics tracked against 4-week and 12-week baselines, with z-score
+            signal detection so stakeholders only get pinged when performance <em>actually</em>
+            deviates. A formatted email lands every Monday at 7:00 AM — nobody touches a
+            spreadsheet.
+          </p>
+          <p class="cs__tags mono">n8n · Statistics · Email automation</p>
+        </div>
+      </article>
+
+      <article class="cs cs--flip reveal">
+        <figure class="cs__media">
+          <img src="assets/wf2-auction-insights-canvas.png" alt="n8n workflow canvas: Auction Insights export to Excel, OneDrive and CRM" loading="lazy" />
+        </figure>
+        <div class="cs__body">
+          <p class="cs__metric mono">2–3 hrs/week → zero</p>
+          <h3 class="cs__title">Google Ads competitive data → Excel → CRM</h3>
+          <p class="cs__text">
+            Auction Insights exports arrive messy — "&lt; 10%" strings, "--" placeholders, mixed
+            formats. This pipeline cleans them to typed fields, rebuilds the formatted Excel
+            report, uploads to OneDrive, and syncs competitive context into the CRM via
+            PostgreSQL. One trigger, five stages, zero manual steps.
+          </p>
+          <p class="cs__tags mono">n8n · Excel · OneDrive · PostgreSQL</p>
+        </div>
+      </article>
+
+      <article class="cs reveal">
+        <figure class="cs__media">
+          <img src="assets/wf3-dual-write-canvas.png" alt="n8n dual-write ETL workflow: files plus PostgreSQL with reconciliation check" loading="lazy" />
+        </figure>
+        <div class="cs__body">
+          <p class="cs__metric mono">Any question → one SQL query</p>
+          <h3 class="cs__title">Spreadsheet chaos → central database</h3>
+          <p class="cs__text">
+            Migrated file-based data flows to dual-write into PostgreSQL with zero downtime for
+            existing report consumers. Composite keys make re-runs impossible to double-load;
+            row-count reconciliation guards every run; RLS enforces access at the database layer.
+          </p>
+          <p class="cs__tags mono">PostgreSQL · Supabase · SQL · n8n</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ SPEC DEMOS ============ -->
     <section id="projects" class="section">
-      <h2 class="section__label reveal"><span class="mono">02</span> Selected work</h2>
+      <h2 class="section__label reveal"><span class="mono">03</span> Spec demos</h2>
       <p class="section__intro reveal">
         Runnable demonstrations — each with the code, an n8n workflow, an architecture
         diagram, and a short case study on GitHub. Built with synthetic data.
@@ -182,7 +242,7 @@
 
     <!-- ============ STACK ============ -->
     <section id="stack" class="section">
-      <h2 class="section__label reveal"><span class="mono">03</span> Stack</h2>
+      <h2 class="section__label reveal"><span class="mono">04</span> Stack</h2>
       <ul class="stack reveal">
         <li>n8n</li>
         <li>Python</li>
@@ -196,9 +256,35 @@
       </ul>
     </section>
 
+    <!-- ============ OFFER ============ -->
+    <section id="offer" class="section">
+      <h2 class="section__label reveal"><span class="mono">05</span> Fixed-scope offer</h2>
+      <div class="offer reveal">
+        <div class="offer__head">
+          <h3 class="offer__title">Automated weekly report setup</h3>
+          <p class="offer__price mono">$400 · delivered in 5 days</p>
+        </div>
+        <p class="offer__lead">
+          Your team builds the same report by hand every week — exporting, cleaning, formatting,
+          emailing. In five business days it builds itself, on schedule, and you never touch it again.
+        </p>
+        <ul class="offer__list">
+          <li>1 data source (ad platform, CRM, Sheets, database, or CSV drop)</li>
+          <li>Cleaning &amp; transformation — normalized identically every run</li>
+          <li>Scheduled delivery to email, Slack, or Sheets — up to 10 metrics with week-over-week comparison</li>
+          <li>Plain-English documentation + 14 days of post-delivery fixes, free</li>
+        </ul>
+        <p class="offer__note">
+          Need alerting that only pings on real changes, more sources, or a central database?
+          Those are add-ons — ask.
+        </p>
+        <a class="btn btn--primary" href="mailto:vinceangelolmacaraig@gmail.com?subject=Automated%20weekly%20report">Automate my report</a>
+      </div>
+    </section>
+
     <!-- ============ CONTACT ============ -->
     <section id="contact" class="section section--contact">
-      <h2 class="section__label reveal"><span class="mono">04</span> Get in touch</h2>
+      <h2 class="section__label reveal"><span class="mono">06</span> Get in touch</h2>
       <p class="contact__lead reveal">
         Available for freelance projects — marketing-data pipelines and AI automation.
         The fastest way to reach me:
