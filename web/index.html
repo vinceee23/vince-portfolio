@@ -75,7 +75,7 @@
       <div class="pipeline reveal" aria-hidden="true">
         <svg viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="plLine" x1="0" y1="0" x2="1" y2="0">
+            <linearGradient id="plLine" gradientUnits="userSpaceOnUse" x1="30" y1="0" x2="860" y2="0">
               <stop offset="0" stop-color="#6ee7b7" stop-opacity="0.12" />
               <stop offset="1" stop-color="#6ee7b7" stop-opacity="0.55" />
             </linearGradient>
@@ -130,6 +130,15 @@
             schedule and don't break quietly.
           </p>
           <p class="card__tags mono">n8n · Python · LLM · REST APIs</p>
+        </article>
+        <article class="card reveal">
+          <h3 class="card__title">Private AI over your data</h3>
+          <p class="card__body">
+            Chat assistants that answer business questions straight from your database —
+            "revenue for this campaign, last 4 weeks?" — plus AI lead scoring and labeling.
+            Runs on local models, so company data never leaves your network.
+          </p>
+          <p class="card__tags mono">Ollama · Local LLM · n8n · SQL</p>
         </article>
         <article class="card reveal">
           <h3 class="card__title">Dashboards stakeholders trust</h3>
@@ -255,6 +264,16 @@
           <p class="card__tags mono">SQL · Metabase</p>
           <a class="card__link" href="https://github.com/vinceee23/vince-portfolio/tree/main/demos/03-revops-kpi-dashboard" target="_blank" rel="noopener">View on GitHub →</a>
         </article>
+        <article class="card reveal">
+          <h3 class="card__title">Local-AI data assistant</h3>
+          <p class="card__body">
+            Chat-with-your-data, fully local: a question hits n8n, a local LLM (Ollama)
+            translates it to SQL over a synthetic sales database, and the answer comes back
+            summarized — no cloud API anywhere in the loop.
+          </p>
+          <p class="card__tags mono">n8n · Ollama · SQL</p>
+          <a class="card__link" href="https://github.com/vinceee23/vince-portfolio/tree/main/demos/04-local-ai-data-assistant" target="_blank" rel="noopener">View on GitHub →</a>
+        </article>
       </div>
     </section>
 
@@ -279,24 +298,26 @@
       <h2 class="section__label reveal"><span class="mono">05</span> Fixed-scope offer</h2>
       <div class="offer reveal">
         <div class="offer__head">
-          <h3 class="offer__title">Automated weekly report setup</h3>
-          <p class="offer__price mono">$400 · delivered in 5 days</p>
+          <h3 class="offer__title">Automated report setup</h3>
+          <p class="offer__price mono">fixed scope · fixed quote · ~5 days</p>
         </div>
         <p class="offer__lead">
           Your team builds the same report by hand every week — exporting, cleaning, formatting,
-          emailing. In five business days it builds itself, on schedule, and you never touch it again.
+          emailing. In about five business days it builds itself, on schedule, and you never touch
+          it again.
         </p>
         <ul class="offer__list">
-          <li>1 data source (ad platform, CRM, Sheets, database, or CSV drop)</li>
+          <li>Your data sources (ad platforms, CRM, Sheets, databases, or CSV drops)</li>
           <li>Cleaning &amp; transformation — normalized identically every run</li>
-          <li>Scheduled delivery to email, Slack, or Sheets — up to 10 metrics with week-over-week comparison</li>
+          <li>Scheduled delivery to email, Slack, or Sheets, with period-over-period comparison</li>
+          <li>Optional: statistical alerting, central database, local-AI chat over the data</li>
           <li>Plain-English documentation + 14 days of post-delivery fixes, free</li>
         </ul>
         <p class="offer__note">
-          Need alerting that only pings on real changes, more sources, or a central database?
-          Those are add-ons — ask.
+          Every stack is different, so pricing depends on sources, cadence, and where your data
+          lives. Send me what your report looks like today — you'll get a fixed quote within a day.
         </p>
-        <a class="btn btn--primary" href="mailto:vinceangelolmacaraig@gmail.com?subject=Automated%20weekly%20report">Automate my report</a>
+        <a class="btn btn--primary" href="mailto:vinceangelolmacaraig@gmail.com?subject=Automated%20report%20quote">Get a fixed quote</a>
       </div>
     </section>
 

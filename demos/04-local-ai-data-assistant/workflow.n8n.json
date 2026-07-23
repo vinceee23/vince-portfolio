@@ -1,0 +1,107 @@
+{
+  "name": "Demo 04 — Local-AI Data Assistant (ask your data, zero cloud)",
+  "nodes": [
+    {
+      "parameters": { "httpMethod": "POST", "path": "ask", "responseMode": "responseNode", "options": {} },
+      "id": "e1000000-0000-4000-8000-000000000001",
+      "name": "POST /ask {question}",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build the SQL-writing prompt: schema + question, JSON-constrained output.\nconst question = $json.body?.question ?? $json.question;\nif (!question) throw new Error('POST a JSON body with a \"question\" field');\nconst schema = `\\ncampaigns(campaign_id, campaign_name, channel)  -- channel: paid_search|paid_social|email|organic\\ndaily_performance(perf_date, campaign_id, revenue, spend, leads)`;\nreturn [{ json: { question, prompt: `You write PostgreSQL for analysts. Schema:${schema}\\n\\nRules: SELECT-only. Single statement. Use ISO dates relative to CURRENT_DATE. Respond ONLY as JSON: {\\\"sql\\\": \\\"...\\\"}.\\n\\nQuestion: ${question}` } }];"
+      },
+      "id": "e1000000-0000-4000-8000-000000000002",
+      "name": "Build SQL Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'qwen2.5:7b', prompt: $json.prompt, format: 'json', stream: false }) }}",
+        "options": {}
+      },
+      "id": "e1000000-0000-4000-8000-000000000003",
+      "name": "Ollama: question → SQL",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Guardrail: the model's SQL must be a single SELECT — nothing else runs.\nconst out = JSON.parse($json.response);\nconst sql = String(out.sql ?? '').trim().replace(/;\\s*$/, '');\nconst forbidden = /\\b(insert|update|delete|drop|alter|create|grant|truncate|copy)\\b|;/i;\nif (!/^select\\b/i.test(sql) || forbidden.test(sql)) {\n  throw new Error(`Blocked non-SELECT SQL from model: ${sql.slice(0, 120)}`);\n}\nreturn [{ json: { sql, question: $('Build SQL Prompt').first().json.question } }];"
+      },
+      "id": "e1000000-0000-4000-8000-000000000004",
+      "name": "Guardrail: SELECT-only",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "={{ $json.sql }}",
+        "options": {}
+      },
+      "id": "e1000000-0000-4000-8000-000000000005",
+      "name": "Run Query (read-only role)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Second model call: narrate the rows. Numbers come from the DB, words from the model.\nconst rows = items.map(i => i.json);\nconst { question, sql } = $('Guardrail: SELECT-only').first().json;\nreturn [{ json: { question, sql, rows,\n  prompt: `Question: ${question}\\nQuery result rows (JSON): ${JSON.stringify(rows).slice(0, 4000)}\\n\\nAnswer the question in 2-3 sentences using ONLY these rows. Include the key numbers. If rows are empty, say no data matched.` } }];"
+      },
+      "id": "e1000000-0000-4000-8000-000000000006",
+      "name": "Build Answer Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'qwen2.5:7b', prompt: $json.prompt, stream: false }) }}",
+        "options": {}
+      },
+      "id": "e1000000-0000-4000-8000-000000000007",
+      "name": "Ollama: rows → answer",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ answer: $json.response, sql: $('Build Answer Prompt').first().json.sql, rows: $('Build Answer Prompt').first().json.rows }) }}",
+        "options": {}
+      },
+      "id": "e1000000-0000-4000-8000-000000000008",
+      "name": "Respond {answer, sql, rows}",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1780, 300]
+    }
+  ],
+  "connections": {
+    "POST /ask {question}": { "main": [[ { "node": "Build SQL Prompt", "type": "main", "index": 0 } ]] },
+    "Build SQL Prompt": { "main": [[ { "node": "Ollama: question → SQL", "type": "main", "index": 0 } ]] },
+    "Ollama: question → SQL": { "main": [[ { "node": "Guardrail: SELECT-only", "type": "main", "index": 0 } ]] },
+    "Guardrail: SELECT-only": { "main": [[ { "node": "Run Query (read-only role)", "type": "main", "index": 0 } ]] },
+    "Run Query (read-only role)": { "main": [[ { "node": "Build Answer Prompt", "type": "main", "index": 0 } ]] },
+    "Build Answer Prompt": { "main": [[ { "node": "Ollama: rows → answer", "type": "main", "index": 0 } ]] },
+    "Ollama: rows → answer": { "main": [[ { "node": "Respond {answer, sql, rows}", "type": "main", "index": 0 } ]] }
+  },
+  "settings": { "executionOrder": "v1" }
+}
